@@ -1,5 +1,6 @@
 package eu.posegga.brained.local.repository
 
+import eu.posegga.brained.R
 import eu.posegga.brained.domain.model.Level
 import io.reactivex.Single
 
@@ -10,7 +11,7 @@ class LevelLocalSource {
 
     private companion object {
         val staticLevels = listOf(
-            Level(1, "Level 1", "https://placekitten.com/g/200/200")
+            Level(1, "Sortieren", R.drawable.ic_sort)
         )
     }
 }

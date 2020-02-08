@@ -11,6 +11,8 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center"
+        android:background="@color/darkPink"
+        android:padding="@dimen/standard_margin"
         tools:src="@mipmap/ic_launcher" />
 
     <TextView
@@ -18,6 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         tools:text="Level 1" />
 
 </LinearLayout>

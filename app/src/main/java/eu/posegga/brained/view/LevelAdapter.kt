@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import eu.posegga.brained.R
 import eu.posegga.brained.domain.model.Level
-import eu.posegga.brained.extensions.loadFromUrl
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.level_item.view.*
 
@@ -29,7 +28,7 @@ class LevelAdapter : RecyclerView.Adapter<LevelAdapter.LevelViewHolder>() {
 
         fun bind(level: Level) {
             containerView.levelName.text = level.name
-            containerView.levelImage.loadFromUrl(level.imgSrc)
+            containerView.levelImage.setImageResource(level.imgSrc)
         }
     }
 }

@@ -10,5 +10,5 @@ fun <T> Single<T>.subscribeOnIoObserveOnMain(): Single<T> =
     subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
 
-fun ImageView.loadFromUrl(url: String) =
+fun ImageView.load(url: String) =
     Glide.with(context).load(url).into(this)

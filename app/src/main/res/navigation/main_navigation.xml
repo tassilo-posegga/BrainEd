@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_navigation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_navigation"
     app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="eu.posegga.brained.home.view.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment">
+        <action
+            android:id="@+id/action_homeFragment_to_level1Fragment"
+            app:destination="@id/level1Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/level1Fragment"
+        android:name="eu.posegga.brained.level1.Level1Fragment"
+        android:label="Level1Fragment" />
 </navigation>

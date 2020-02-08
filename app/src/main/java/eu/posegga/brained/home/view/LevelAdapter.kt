@@ -16,24 +16,24 @@ class LevelAdapter(
 
     var levels: List<Level> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LevelViewHolder {
-
-        return LevelViewHolder(LayoutInflater.from(parent.context)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LevelViewHolder =
+        LevelViewHolder(LayoutInflater.from(parent.context)
             .inflate(R.layout.level_item, parent, false))
-    }
 
     override fun getItemCount(): Int =
         levels.size
 
     override fun onBindViewHolder(holder: LevelViewHolder, position: Int) =
-        holder.bind(levels[position])
+        holder.bind(levels[position], clickListener)
 
     class LevelViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView), LayoutContainer {
 
-        fun bind(level: Level) {
+        fun bind(level: Level,
+            clickListener: (level: Level) -> Unit) {
             containerView.levelName.text = level.name
             containerView.levelImage.setImageResource(level.imgSrc)
+            containerView.setOnClickListener { clickListener.invoke(level) }
         }
     }
 }

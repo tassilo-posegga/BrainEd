@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import eu.posegga.brained.R
 import eu.posegga.brained.home.domain.model.Level
@@ -18,7 +19,6 @@ class HomeFragment : Fragment() {
     private val homeViewModel by viewModel<HomeViewModel>()
 
     private val levelAdapter = LevelAdapter(::onLevelClick)
-    private val levelLayoutManager = GridLayoutManager(context, COLUMN_COUNT)
 
     override fun onCreateView(inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,7 +29,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         levelList.apply {
             adapter = levelAdapter
-            layoutManager = levelLayoutManager
+            layoutManager = GridLayoutManager(context, COLUMN_COUNT)
             hasFixedSize()
         }
 
@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun onLevelClick(level: Level) {
-        
+        findNavController().navigate(R.id.level1Fragment)
     }
 
     private companion object {

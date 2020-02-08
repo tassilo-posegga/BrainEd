@@ -1,4 +1,4 @@
-package eu.posegga.brained.view
+package eu.posegga.brained.home.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import eu.posegga.brained.R
-import eu.posegga.brained.domain.model.Level
-import eu.posegga.brained.viewmodel.HomeViewModel
+import eu.posegga.brained.home.domain.model.Level
+import eu.posegga.brained.home.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.home_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -17,7 +17,7 @@ class HomeFragment : Fragment() {
 
     private val homeViewModel by viewModel<HomeViewModel>()
 
-    private val levelAdapter = LevelAdapter()
+    private val levelAdapter = LevelAdapter(::onLevelClick)
     private val levelLayoutManager = GridLayoutManager(context, COLUMN_COUNT)
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -40,6 +40,10 @@ class HomeFragment : Fragment() {
     private fun observeLevels(levels: List<Level>) {
         levelAdapter.levels = levels
         levelAdapter.notifyDataSetChanged()
+    }
+
+    private fun onLevelClick(level: Level) {
+        
     }
 
     private companion object {

@@ -1,4 +1,4 @@
-package eu.posegga.brained.extensions
+package eu.posegga.brained.home.extensions
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

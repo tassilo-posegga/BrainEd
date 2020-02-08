@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="eu.posegga.brained.view.HomeFragment"
+        android:name="eu.posegga.brained.home.view.HomeFragment"
         android:label="HomeFragment" />
 </navigation>

@@ -1,4 +1,4 @@
-package eu.posegga.brained.domain.model
+package eu.posegga.brained.home.domain.model
 
 data class Level(
     val id: Int,

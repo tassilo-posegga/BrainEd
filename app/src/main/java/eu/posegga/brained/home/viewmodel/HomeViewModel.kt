@@ -1,11 +1,11 @@
-package eu.posegga.brained.viewmodel
+package eu.posegga.brained.home.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import eu.posegga.brained.domain.model.Level
-import eu.posegga.brained.domain.usecase.LoadLevelsUseCase
-import eu.posegga.brained.extensions.subscribeOnIoObserveOnMain
+import eu.posegga.brained.home.domain.model.Level
+import eu.posegga.brained.home.domain.usecase.LoadLevelsUseCase
+import eu.posegga.brained.home.extensions.subscribeOnIoObserveOnMain
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
@@ -33,6 +33,10 @@ class HomeViewModel(
     override fun onCleared() {
         disposables.dispose()
         super.onCleared()
+    }
+
+    fun levelClicked(level: Level) {
+
     }
 }
 

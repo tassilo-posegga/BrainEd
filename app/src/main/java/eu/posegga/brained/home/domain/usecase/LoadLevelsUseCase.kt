@@ -1,6 +1,6 @@
-package eu.posegga.brained.domain.usecase
+package eu.posegga.brained.home.domain.usecase
 
-import eu.posegga.brained.data.LevelRepository
+import eu.posegga.brained.home.data.LevelRepository
 
 class LoadLevelsUseCase(
     private val repository: LevelRepository

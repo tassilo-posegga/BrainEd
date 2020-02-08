@@ -1,7 +1,7 @@
-package eu.posegga.brained.data
+package eu.posegga.brained.home.data
 
-import eu.posegga.brained.domain.model.Level
-import eu.posegga.brained.local.repository.LevelLocalSource
+import eu.posegga.brained.home.domain.model.Level
+import eu.posegga.brained.home.local.repository.LevelLocalSource
 import io.reactivex.Single
 
 class LevelRepository(

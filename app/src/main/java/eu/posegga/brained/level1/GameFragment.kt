@@ -9,9 +9,9 @@ import android.widget.LinearLayout
 import android.widget.LinearLayout.HORIZONTAL
 import android.widget.LinearLayout.LayoutParams.MATCH_PARENT
 import android.widget.LinearLayout.VERTICAL
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import eu.posegga.brained.R
 import eu.posegga.brained.home.domain.model.Level
 import eu.posegga.brained.home.view.CircleView
@@ -123,8 +123,7 @@ class GameFragment : Fragment() {
     }
 
     private fun showWinScreen() {
-        Toast.makeText(context, "You won", Toast.LENGTH_SHORT)
-            .show()
+        findNavController().navigate(R.id.action_level1Fragment_to_wonFragment)
     }
 
     private fun showLoading() {
@@ -132,9 +131,7 @@ class GameFragment : Fragment() {
     }
 
     private fun showLostScreen() {
-        Toast.makeText(context, "You lost", Toast.LENGTH_SHORT)
-            .show()
-
+        findNavController().navigate(R.id.action_level1Fragment_to_lostFragment)
     }
 
 

@@ -16,5 +16,28 @@
     <fragment
         android:id="@+id/level1Fragment"
         android:name="eu.posegga.brained.level1.GameFragment"
-        android:label="Level1Fragment" />
+        android:label="Level1Fragment" >
+        <action
+            android:id="@+id/action_level1Fragment_to_wonFragment"
+            app:destination="@id/wonFragment" />
+        <action
+            android:id="@+id/action_level1Fragment_to_lostFragment"
+            app:destination="@id/lostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/wonFragment"
+        android:name="eu.posegga.brained.home.view.WonFragment"
+        android:label="WonFragment" >
+        <action
+            android:id="@+id/action_wonFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lostFragment"
+        android:name="eu.posegga.brained.home.view.LostFragment"
+        android:label="LostFragment" >
+        <action
+            android:id="@+id/action_lostFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

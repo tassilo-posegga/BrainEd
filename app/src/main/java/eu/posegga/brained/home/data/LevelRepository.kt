@@ -10,4 +10,7 @@ class LevelRepository(
 
     fun loadLevels(): Single<List<Level>> =
         local.loadLevels()
+
+    fun loadLevelById(id: String): Single<Level> =
+        local.loadLevelById(id)
 }

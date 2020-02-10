@@ -15,6 +15,6 @@
 
     <fragment
         android:id="@+id/level1Fragment"
-        android:name="eu.posegga.brained.level1.Level1Fragment"
+        android:name="eu.posegga.brained.level1.GameFragment"
         android:label="Level1Fragment" />
 </navigation>

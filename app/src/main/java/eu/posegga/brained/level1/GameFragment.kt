@@ -26,6 +26,13 @@ class GameFragment : Fragment() {
     private val homeViewModel by sharedViewModel<HomeViewModel>()
     private val currentLevelViewModel by sharedViewModel<Level1ViewModel>()
 
+    private val rows = 5
+    private val columns = 4
+    private val cells = rows * columns
+    private val availableRadius =
+        generateSequence(10f) { it + 6 }.take(cells).toList().reversed().toMutableList()
+    private val shuffled = availableRadius.shuffled().toMutableList()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,30 +50,25 @@ class GameFragment : Fragment() {
     private fun startLevel(level: Level) {
         description.text = level.description
 
-        val rows = 5
-        val columns = 4
-        val cells = rows * columns
-
-        val availableRadius = generateSequence(10f) { it + 6 }.take(cells).toList().shuffled()
-
         val currentLevelView = linearLayout(VERTICAL, 0)
 
+        var cellId = 0
         for (row in 1..rows) {
             val rowLayout = linearLayout(HORIZONTAL, 0)
 
             for (column in 1..columns) {
-                val id = row * column
-                val cellLayout = linearLayout(VERTICAL, id, ::onCellClicked)
-                cellLayout.addView(
-                    CircleView(context).apply {
-                        radius = availableRadius[id - 1]
-                    }
-                )
-                rowLayout.addView(cellLayout)
+                shuffled.pop()?.let {
+                    val cellLayout = linearLayout(VERTICAL, it.toInt(), ::onCellClicked)
+                    cellLayout.addView(
+                        CircleView(context).apply {
+                            radius = it
+                        }
+                    )
+                    cellId++
+                    rowLayout.addView(cellLayout)
+                }
             }
-
             currentLevelView.addView(rowLayout)
-
         }
 
         contentContainer.addView(currentLevelView)
@@ -78,8 +80,20 @@ class GameFragment : Fragment() {
         currentLevelViewModel.start()
     }
 
-    private fun onCellClicked(cellId: @ParameterName(name = "id") Int) {
-        Toast.makeText(context, "$cellId", Toast.LENGTH_SHORT).show()
+    private fun onCellClicked(cellId: Int) {
+        availableRadius.pop()?.let {
+            if (it.toInt() != cellId) {
+                showLostScreen()
+            } else {
+                hideCell(cellId)
+            }
+        } ?: showWinScreen()
+    }
+
+    private fun hideCell(cellId: Int) {
+        contentContainer.findViewById<View>(cellId).apply {
+            visibility = View.INVISIBLE
+        }
     }
 
     private fun linearLayout(
@@ -109,7 +123,8 @@ class GameFragment : Fragment() {
     }
 
     private fun showWinScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(context, "You won", Toast.LENGTH_SHORT)
+            .show()
     }
 
     private fun showLoading() {
@@ -117,6 +132,12 @@ class GameFragment : Fragment() {
     }
 
     private fun showLostScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(context, "You lost", Toast.LENGTH_SHORT)
+            .show()
+
     }
+
+
+    fun <T> MutableList<T>.pop(): T? =
+        if (this.count() > 0) this.removeAt(this.count() - 1) else null
 }

@@ -1,13 +1,20 @@
 package eu.posegga.brained.level1
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.LinearLayout.HORIZONTAL
+import android.widget.LinearLayout.LayoutParams.MATCH_PARENT
+import android.widget.LinearLayout.VERTICAL
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import eu.posegga.brained.R
 import eu.posegga.brained.home.domain.model.Level
+import eu.posegga.brained.home.view.CircleView
 import eu.posegga.brained.home.viewmodel.GameState
 import eu.posegga.brained.home.viewmodel.HomeViewModel
 import eu.posegga.brained.home.viewmodel.Level1ViewModel
@@ -36,8 +43,32 @@ class GameFragment : Fragment() {
     private fun startLevel(level: Level) {
         description.text = level.description
 
-        val currentLevelView =
-            LayoutInflater.from(context).inflate(level.customView, contentContainer, false)
+        val rows = 5
+        val columns = 4
+        val cells = rows * columns
+
+        val availableRadius = generateSequence(10f) { it + 6 }.take(cells).toList().shuffled()
+
+        val currentLevelView = linearLayout(VERTICAL, 0)
+
+        for (row in 1..rows) {
+            val rowLayout = linearLayout(HORIZONTAL, 0)
+
+            for (column in 1..columns) {
+                val id = row * column
+                val cellLayout = linearLayout(VERTICAL, id, ::onCellClicked)
+                cellLayout.addView(
+                    CircleView(context).apply {
+                        radius = availableRadius[id - 1]
+                    }
+                )
+                rowLayout.addView(cellLayout)
+            }
+
+            currentLevelView.addView(rowLayout)
+
+        }
+
         contentContainer.addView(currentLevelView)
 
         currentLevelViewModel.gameState.observe(
@@ -46,6 +77,25 @@ class GameFragment : Fragment() {
 
         currentLevelViewModel.start()
     }
+
+    private fun onCellClicked(cellId: @ParameterName(name = "id") Int) {
+        Toast.makeText(context, "$cellId", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun linearLayout(
+        orient: Int,
+        cellId: Int = 0,
+        clickListener: (id: Int) -> Unit = {}
+    ): LinearLayout =
+        LinearLayout(context).apply {
+            layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT).apply {
+                weight = 1f
+                orientation = orient
+                id = cellId
+                gravity = Gravity.CENTER
+            }
+            setOnClickListener { clickListener.invoke(cellId) }
+        }
 
     private fun gameStateChanged(
         gameState: GameState,

@@ -26,12 +26,10 @@ class GameFragment : Fragment() {
     private val homeViewModel by sharedViewModel<HomeViewModel>()
     private val currentLevelViewModel by sharedViewModel<Level1ViewModel>()
 
-    // TODO read from resource (landscape)
-    private val rows = 5
-    private val columns = 4
-    private val cells = rows * columns
-    private val availableRadius =
-        generateSequence(10f) { it + 6 }.take(cells).toList().reversed().toMutableList()
+    private val rows by lazy { resources.getInteger(R.integer.rows) }
+    private val columns by lazy { resources.getInteger(R.integer.columns) }
+    private val cells by lazy { rows * columns }
+    private lateinit var availableRadius: MutableList<Float>
     private lateinit var shuffled: MutableList<Float>
 
     override fun onCreateView(
@@ -47,6 +45,8 @@ class GameFragment : Fragment() {
         homeViewModel.loadLevelById("1")
         homeViewModel.currentLevel.observe(viewLifecycleOwner, Observer(::startLevel))
 
+        availableRadius =
+            generateSequence(10f) { it + 6 }.take(cells).toList().reversed().toMutableList()
         shuffled = availableRadius.shuffled().toMutableList()
     }
 
@@ -55,19 +55,18 @@ class GameFragment : Fragment() {
 
         val currentLevelView = linearLayout(VERTICAL, 0)
 
-        var cellId = 0
         for (row in 1..rows) {
             val rowLayout = linearLayout(HORIZONTAL, 0)
 
             for (column in 1..columns) {
-                shuffled.pop()?.let {
-                    val cellLayout = linearLayout(VERTICAL, it.toInt(), ::onCellClicked)
+                shuffled.pop()?.let { rndRadius ->
+                    val cellLayout = linearLayout(VERTICAL, rndRadius.toInt())
+                    cellLayout.setOnClickListener { onCellClicked(rndRadius.toInt()) }
                     cellLayout.addView(
                         CircleView(context).apply {
-                            radius = it
+                            radius = rndRadius
                         }
                     )
-                    cellId++
                     rowLayout.addView(cellLayout)
                 }
             }
@@ -84,14 +83,16 @@ class GameFragment : Fragment() {
     }
 
     private fun onCellClicked(cellId: Int) {
-        showWinScreen()
-//        availableRadius.pop()?.let {
-//            if (it.toInt() != cellId) {
-//                showLostScreen()
-//            } else {
-//                hideCell(cellId)
-//            }
-//        } ?: showWinScreen()
+        availableRadius.pop()?.let {
+            if (it.toInt() != cellId) {
+                showLostScreen()
+            } else {
+                hideCell(cellId)
+            }
+            if (availableRadius.isEmpty()) {
+                showWinScreen()
+            }
+        }
     }
 
     private fun hideCell(cellId: Int) {
@@ -102,8 +103,7 @@ class GameFragment : Fragment() {
 
     private fun linearLayout(
         orient: Int,
-        cellId: Int = 0,
-        clickListener: (id: Int) -> Unit = {}
+        cellId: Int = 0
     ): LinearLayout =
         LinearLayout(context).apply {
             layoutParams = LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT).apply {
@@ -112,7 +112,6 @@ class GameFragment : Fragment() {
                 id = cellId
                 gravity = Gravity.CENTER
             }
-            setOnClickListener { clickListener.invoke(cellId) }
         }
 
     private fun gameStateChanged(

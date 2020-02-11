@@ -32,21 +32,14 @@
 
     <ImageButton
         android:id="@+id/retryButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@color/colorPrimary"
-        android:scaleType="fitCenter"
+        style="@style/ImageButton"
         android:src="@drawable/ic_replay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <ImageButton
         android:id="@+id/menuButton"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@color/colorPrimary"
-        android:scaleType="fitCenter"
+        style="@style/ImageButton"
         android:src="@drawable/ic_reorder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

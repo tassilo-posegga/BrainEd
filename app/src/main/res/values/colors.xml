@@ -8,4 +8,6 @@
     <color name="darkPink">#75086E</color>
     <color name="white">#FFF</color>
     <color name="black">#000</color>
+
+    <color name="transparent">#00000000</color>
 </resources>

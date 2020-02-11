@@ -26,12 +26,13 @@ class GameFragment : Fragment() {
     private val homeViewModel by sharedViewModel<HomeViewModel>()
     private val currentLevelViewModel by sharedViewModel<Level1ViewModel>()
 
+    // TODO read from resource (landscape)
     private val rows = 5
     private val columns = 4
     private val cells = rows * columns
     private val availableRadius =
         generateSequence(10f) { it + 6 }.take(cells).toList().reversed().toMutableList()
-    private val shuffled = availableRadius.shuffled().toMutableList()
+    private lateinit var shuffled: MutableList<Float>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +46,8 @@ class GameFragment : Fragment() {
 
         homeViewModel.loadLevelById("1")
         homeViewModel.currentLevel.observe(viewLifecycleOwner, Observer(::startLevel))
+
+        shuffled = availableRadius.shuffled().toMutableList()
     }
 
     private fun startLevel(level: Level) {
@@ -81,13 +84,14 @@ class GameFragment : Fragment() {
     }
 
     private fun onCellClicked(cellId: Int) {
-        availableRadius.pop()?.let {
-            if (it.toInt() != cellId) {
-                showLostScreen()
-            } else {
-                hideCell(cellId)
-            }
-        } ?: showWinScreen()
+        showWinScreen()
+//        availableRadius.pop()?.let {
+//            if (it.toInt() != cellId) {
+//                showLostScreen()
+//            } else {
+//                hideCell(cellId)
+//            }
+//        } ?: showWinScreen()
     }
 
     private fun hideCell(cellId: Int) {

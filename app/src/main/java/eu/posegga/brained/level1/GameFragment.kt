@@ -1,6 +1,7 @@
 package eu.posegga.brained.level1
 
 import android.graphics.Color
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -24,6 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class GameFragment : Fragment() {
 
     private val homeViewModel by sharedViewModel<HomeViewModel>()
+    private val mediaPlayer by lazy { MediaPlayer.create(context, R.raw.blop) }
 
     private val rows by lazy { resources.getInteger(R.integer.rows) }
     private val columns by lazy { resources.getInteger(R.integer.columns) }
@@ -96,6 +98,7 @@ class GameFragment : Fragment() {
     }
 
     private fun hideCell(cellId: Int) {
+        mediaPlayer.start()
         getCellCircle(cellId)?.apply {
             visibility = View.INVISIBLE
         }

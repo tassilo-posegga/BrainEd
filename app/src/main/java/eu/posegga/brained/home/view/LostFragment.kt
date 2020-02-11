@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import eu.posegga.brained.R
+import kotlinx.android.synthetic.main.won_fragment.*
 
 class LostFragment : Fragment() {
 
@@ -15,4 +17,9 @@ class LostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.lost_fragment, container, false)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        retryButton.setOnClickListener { findNavController().navigate(R.id.action_lostFragment_to_level1Fragment) }
+        menuButton.setOnClickListener { findNavController().navigate(R.id.action_lostFragment_to_homeFragment) }
+    }
 }

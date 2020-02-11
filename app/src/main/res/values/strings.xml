@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BrainEd</string>
     <string name="home_welcome">Hallo Elea!</string>
+    <string name="lost">Verloren</string>
 </resources>

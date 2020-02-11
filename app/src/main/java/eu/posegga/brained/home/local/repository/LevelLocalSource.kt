@@ -19,7 +19,7 @@ class LevelLocalSource {
                 "Sortieren",
                 R.drawable.ic_sort,
                 "Sortiere von klein nach groß",
-                R.layout.level1_custom_view,
+                0,
                 R.id.level1Fragment
             )
         )

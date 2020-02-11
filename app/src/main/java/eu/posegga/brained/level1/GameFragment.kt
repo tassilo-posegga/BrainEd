@@ -15,16 +15,13 @@ import androidx.navigation.fragment.findNavController
 import eu.posegga.brained.R
 import eu.posegga.brained.home.domain.model.Level
 import eu.posegga.brained.home.view.CircleView
-import eu.posegga.brained.home.viewmodel.GameState
 import eu.posegga.brained.home.viewmodel.HomeViewModel
-import eu.posegga.brained.home.viewmodel.Level1ViewModel
 import kotlinx.android.synthetic.main.game_fragment.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class GameFragment : Fragment() {
 
     private val homeViewModel by sharedViewModel<HomeViewModel>()
-    private val currentLevelViewModel by sharedViewModel<Level1ViewModel>()
 
     private val rows by lazy { resources.getInteger(R.integer.rows) }
     private val columns by lazy { resources.getInteger(R.integer.columns) }
@@ -74,12 +71,6 @@ class GameFragment : Fragment() {
         }
 
         contentContainer.addView(currentLevelView)
-
-        currentLevelViewModel.gameState.observe(
-            viewLifecycleOwner,
-            Observer { gameStateChanged(it, currentLevelView) })
-
-        currentLevelViewModel.start()
     }
 
     private fun onCellClicked(cellId: Int) {
@@ -114,29 +105,14 @@ class GameFragment : Fragment() {
             }
         }
 
-    private fun gameStateChanged(
-        gameState: GameState,
-        currentLevelView: View
-    ) {
-        when (gameState) {
-            GameState.LOST -> showLostScreen()
-            GameState.LOADING -> showLoading()
-            GameState.WON -> showWinScreen()
-        }
-    }
 
     private fun showWinScreen() {
         findNavController().navigate(R.id.action_level1Fragment_to_wonFragment)
     }
 
-    private fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     private fun showLostScreen() {
         findNavController().navigate(R.id.action_level1Fragment_to_lostFragment)
     }
-
 
     fun <T> MutableList<T>.pop(): T? =
         if (this.count() > 0) this.removeAt(this.count() - 1) else null

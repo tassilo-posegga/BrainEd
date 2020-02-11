@@ -22,5 +22,4 @@ class WonFragment : Fragment() {
         retryButton.setOnClickListener { findNavController().navigate(R.id.action_wonFragment_to_level1Fragment) }
         menuButton.setOnClickListener { findNavController().navigate(R.id.action_wonFragment_to_homeFragment) }
     }
-
 }

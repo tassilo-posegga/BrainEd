@@ -78,9 +78,7 @@ class GameFragment : Fragment() {
     private fun onCellClicked(cellId: Int) {
         availableRadius.pop()?.let {
             if (it.toInt() != cellId) {
-                markWrongCell(cellId)
                 markCorrectCell(it.toInt())
-                animateLose()
                 showLostScreen()
             } else {
                 hideCell(cellId)
@@ -91,18 +89,9 @@ class GameFragment : Fragment() {
         }
     }
 
-    private fun animateLose() {
-    }
-
     private fun markCorrectCell(cellId: Int) {
         getCellCircle(cellId)?.apply {
             circleColor = Color.GREEN
-        }
-    }
-
-    private fun markWrongCell(cellId: Int) {
-        getCellCircle(cellId)?.apply {
-            circleColor = Color.RED
         }
     }
 

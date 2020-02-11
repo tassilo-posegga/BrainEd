@@ -8,6 +8,7 @@
         android:id="@+id/homeFragment"
         android:name="eu.posegga.brained.home.view.HomeFragment"
         android:label="HomeFragment">
+
         <action
             android:id="@+id/action_homeFragment_to_level1Fragment"
             app:destination="@id/level1Fragment" />
@@ -16,32 +17,42 @@
     <fragment
         android:id="@+id/level1Fragment"
         android:name="eu.posegga.brained.level1.GameFragment"
-        android:label="Level1Fragment" >
+        android:label="Level1Fragment">
+
         <action
             android:id="@+id/action_level1Fragment_to_wonFragment"
             app:destination="@id/wonFragment" />
+
         <action
             android:id="@+id/action_level1Fragment_to_lostFragment"
-            app:destination="@id/lostFragment" />
+            app:destination="@id/lostFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
     </fragment>
+
     <fragment
         android:id="@+id/wonFragment"
         android:name="eu.posegga.brained.home.view.WonFragment"
-        android:label="WonFragment" >
+        android:label="WonFragment">
+
         <action
             android:id="@+id/action_wonFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+
         <action
             android:id="@+id/action_wonFragment_to_level1Fragment"
             app:destination="@id/level1Fragment" />
     </fragment>
+
     <fragment
         android:id="@+id/lostFragment"
         android:name="eu.posegga.brained.home.view.LostFragment"
-        android:label="LostFragment" >
+        android:label="LostFragment">
+
         <action
             android:id="@+id/action_lostFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+
         <action
             android:id="@+id/action_lostFragment_to_level1Fragment"
             app:destination="@id/level1Fragment" />

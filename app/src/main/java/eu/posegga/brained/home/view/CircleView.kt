@@ -9,9 +9,15 @@ import android.view.View
 class CircleView(context: Context?) : View(context) {
 
     var radius = 50f
+    var circleColor = Color.BLACK
+        set(value) {
+            field = value
+            paint.color = value
+            invalidate()
+        }
 
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.BLACK
+    private var paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        color = circleColor
     }
 
     override fun onDraw(canvas: Canvas?) {

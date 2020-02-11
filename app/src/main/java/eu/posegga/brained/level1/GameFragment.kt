@@ -1,5 +1,6 @@
 package eu.posegga.brained.level1
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import eu.posegga.brained.R
 import eu.posegga.brained.home.domain.model.Level
+import eu.posegga.brained.home.extensions.pop
 import eu.posegga.brained.home.view.CircleView
 import eu.posegga.brained.home.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.game_fragment.*
@@ -39,8 +41,8 @@ class GameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        homeViewModel.loadLevelById("1")
         homeViewModel.currentLevel.observe(viewLifecycleOwner, Observer(::startLevel))
+        homeViewModel.loadLevelById("1")
 
         availableRadius =
             generateSequence(10f) { it + 6 }.take(cells).toList().reversed().toMutableList()
@@ -76,6 +78,9 @@ class GameFragment : Fragment() {
     private fun onCellClicked(cellId: Int) {
         availableRadius.pop()?.let {
             if (it.toInt() != cellId) {
+                markWrongCell(cellId)
+                markCorrectCell(it.toInt())
+                animateLose()
                 showLostScreen()
             } else {
                 hideCell(cellId)
@@ -86,11 +91,29 @@ class GameFragment : Fragment() {
         }
     }
 
+    private fun animateLose() {
+    }
+
+    private fun markCorrectCell(cellId: Int) {
+        getCellCircle(cellId)?.apply {
+            circleColor = Color.GREEN
+        }
+    }
+
+    private fun markWrongCell(cellId: Int) {
+        getCellCircle(cellId)?.apply {
+            circleColor = Color.RED
+        }
+    }
+
     private fun hideCell(cellId: Int) {
-        contentContainer.findViewById<View>(cellId).apply {
+        getCellCircle(cellId)?.apply {
             visibility = View.INVISIBLE
         }
     }
+
+    private fun getCellCircle(cellId: Int): CircleView? =
+        contentContainer.findViewById<LinearLayout>(cellId).getChildAt(0) as? CircleView
 
     private fun linearLayout(
         orient: Int,
@@ -113,7 +136,4 @@ class GameFragment : Fragment() {
     private fun showLostScreen() {
         findNavController().navigate(R.id.action_level1Fragment_to_lostFragment)
     }
-
-    fun <T> MutableList<T>.pop(): T? =
-        if (this.count() > 0) this.removeAt(this.count() - 1) else null
 }

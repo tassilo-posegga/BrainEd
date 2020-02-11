@@ -12,3 +12,6 @@ fun <T> Single<T>.subscribeOnIoObserveOnMain(): Single<T> =
 
 fun ImageView.load(url: String) =
     Glide.with(context).load(url).into(this)
+
+fun <T> MutableList<T>.pop(): T? =
+    if (this.count() > 0) this.removeAt(this.count() - 1) else null
